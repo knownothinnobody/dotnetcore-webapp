@@ -18,7 +18,6 @@ env:
   AZURE_WEBAPP_NAME: DC416-DCCM-APP       # set this to your application's name
   AZURE_WEBAPP_PACKAGE_PATH: '.'          # set this to the path to your web app project, defaults to the repository root
   DOTNET_VERSION: '3.0.100'               # set this to the dot net version to use
-  SNYK_TOKEN: ${{ secrets.SNYK_TOKEN  }}  # set this to the Snyk Personal API Token
 
 jobs:
   build-and-deploy:
@@ -36,7 +35,9 @@ jobs:
       
       # SCA with Snyk
       - name: Snyk
-        uses: snyk/actions@0.1.1
+        uses: snyk/actions/dotnet@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN  }}  # set this to the Snyk Personal API Token
       
       # Run dotnet build and publish
       - name: dotnet build and publish
